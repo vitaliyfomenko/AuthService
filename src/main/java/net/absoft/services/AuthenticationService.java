@@ -1,13 +1,24 @@
 package net.absoft.services;
 
+import java.security.SecureRandom;
+import java.util.Base64;
 import java.util.regex.Pattern;
 import net.absoft.data.Response;
 import net.absoft.db.DbConnection;
 
 public class AuthenticationService {
 
+  private static final SecureRandom secureRandom = new SecureRandom();
+  private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
+
+  private String token;
+
+  public String getToken() {
+    return token;
+  }
+
   public Response authenticate(String email, String password) {
-    if(email.isEmpty()) {
+    if(email == null || email.isEmpty()) {
       return new Response(400, "Email should not be empty string");
     }
 
@@ -15,12 +26,12 @@ public class AuthenticationService {
       return new Response(400, "Invalid email");
     }
 
-    if(password.isEmpty()) {
+    if(password == null || password.isEmpty()) {
       return new Response(400, "Password should not be empty string");
     }
 
     if(DbConnection.getInstance().authenticate(email, password)) {
-      return new Response(200, "Authentication successful");
+      return new Response(200, generateToken());
     } else {
       return new Response(401, "Invalid email or password");
     }
@@ -37,5 +48,11 @@ public class AuthenticationService {
     return Pattern.compile(REGEX_PATTERN)
         .matcher(emailAddress)
         .matches();
+  }
+
+  private String generateToken() {
+    byte[] randomBytes = new byte[24];
+    secureRandom.nextBytes(randomBytes);
+    return base64Encoder.encodeToString(randomBytes);
   }
 }
