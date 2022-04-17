@@ -16,7 +16,7 @@ public class AuthenticationServiceTest {
     Response response = new AuthenticationService().authenticate("user1@test.com", "password1");
     assertEquals(response.getCode(), 200, "Response code should be 200");
     assertTrue(validateToken(response.getMessage()),
-        "Token shoud be the 32 digits string. Got: " + response.getMessage());
+        "Token should be the 32 digits string. Got: " + response.getMessage());
   }
 
   @Test
