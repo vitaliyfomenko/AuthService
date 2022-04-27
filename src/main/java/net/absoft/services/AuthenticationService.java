@@ -11,12 +11,6 @@ public class AuthenticationService {
   private static final SecureRandom secureRandom = new SecureRandom();
   private static final Base64.Encoder base64Encoder = Base64.getUrlEncoder();
 
-  private String token;
-
-  public String getToken() {
-    return token;
-  }
-
   public Response authenticate(String email, String password) {
     if(email == null || email.isEmpty()) {
       return new Response(400, "Email should not be empty string");

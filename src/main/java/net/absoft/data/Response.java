@@ -35,4 +35,12 @@ public class Response{
   public int hashCode() {
     return Objects.hash(code, message);
   }
+
+  @Override
+  public String toString() {
+    return "Response{" +
+        "code=" + code +
+        ", message='" + message + '\'' +
+        '}';
+  }
 }
