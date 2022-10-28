@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<suite name="Positive" parallel = "methods" thread-count="5" data-provider-thread-count="5">
+ <test name="serviceTestPositive">
+     <groups>
+         <run>
+             <include name="positive"/>
+         </run>
+     </groups>
+ </test>
+     <packages>
+         <package name="net.absoft"/>
+     </packages>
+</suite>
